@@ -41,7 +41,7 @@ if(NOT _has_CMP0099)
   message(STATUS "libssh2: CMP0099 undetected, resorting to workaround.")
   # CMake before CMP0099 (CMake 3.17 2020-03-20) does not endorse the concept of libdirs and lib names.
   # It expects libs to inherently have an absolute filename. As a workaround, manually copy over libpaths
-  # from depedencies to the libssh2 target, for CMake consumers without this policy set.
+  # from dependencies to the libssh2 target, for CMake consumers without this policy set.
   foreach(_target IN ITEMS @PROJECT_NAME@::@LIB_SHARED@ @PROJECT_NAME@::@LIB_STATIC@)
     if(TARGET "${_target}")
       get_target_property(_libdirs "${_lib}" INTERFACE_LINK_DIRECTORIES)
