@@ -62,9 +62,7 @@ if(ENABLE_ZLIB_COMPRESSION)
 
   list(APPEND LIBSSH2_LIBS ${ZLIB_LIBRARIES})
   list(APPEND LIBSSH2_PC_REQUIRES_PRIVATE "zlib")
-  if(ZLIB_FOUND)
-    list(APPEND _libssh2_definitions "LIBSSH2_HAVE_ZLIB")
-  endif()
+  list(APPEND _libssh2_definitions "LIBSSH2_HAVE_ZLIB")
 endif()
 
 list(APPEND LIBSSH2_LIBS ${LIBSSH2_LIBS_SOCKET})
