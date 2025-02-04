@@ -68,8 +68,6 @@ if(ENABLE_ZLIB_COMPRESSION)
   endif()
 endif()
 
-include_directories(SYSTEM ${CRYPTO_BACKEND_INCLUDE_DIR})
-
 list(APPEND LIBSSH2_LIBS ${LIBSSH2_LIBS_SOCKET})
 
 if(MSVC)
