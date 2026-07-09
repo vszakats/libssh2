@@ -199,6 +199,7 @@ struct wcng_key_ctx {
 
 #if LIBSSH2_ECDSA
 typedef enum {
+    SSH2_EC_CURVE_NONE     = -1,
     SSH2_EC_CURVE_NISTP256 = 0,
     SSH2_EC_CURVE_NISTP384 = 1,
     SSH2_EC_CURVE_NISTP521 = 2,

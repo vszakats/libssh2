@@ -300,6 +300,7 @@
 #endif
 
 typedef enum {
+    SSH2_EC_CURVE_NONE     = NID_undef,
     SSH2_EC_CURVE_NISTP256 = NID_X9_62_prime256v1,
     SSH2_EC_CURVE_NISTP384 = NID_secp384r1,
     SSH2_EC_CURVE_NISTP521 = NID_secp521r1

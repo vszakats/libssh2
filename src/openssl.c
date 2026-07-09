@@ -674,7 +674,7 @@ ssh2_curve_type ssh2_ecdsa_get_curve_type(ssh2_ecdsa_ctx *ec_ctx)
     else if(curve == NID_secp521r1)
         return SSH2_EC_CURVE_NISTP521;
 #endif
-    return SSH2_EC_CURVE_NISTP256;
+    return SSH2_EC_CURVE_NONE;
 }
 
 /*
