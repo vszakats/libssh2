@@ -1122,7 +1122,7 @@ static unsigned char *ossl_rsa_to_pubkey(LIBSSH2_SESSION *session,
     p = ossl_write_bn(p, e, e_bytes);
     p = ossl_write_bn(p, n, n_bytes);
 
-    *key_len = (size_t)(p - key);
+    *key_len = p - key;
 fail:
 #ifdef USE_OPENSSL_3
     BN_clear_free(e);
@@ -2668,7 +2668,7 @@ int ssh2_ecdsa_sign(ssh2_ecdsa_ctx *ec_ctx, LIBSSH2_SESSION *session,
     sp = ossl_write_bn(sp, pr, r_len);
     sp = ossl_write_bn(sp, ps, s_len);
 
-    out_buffer_len = (size_t)(sp - temp_buffer);
+    out_buffer_len = sp - temp_buffer;
 
     out_buffer = SSH2_CALLOC(session, out_buffer_len);
     if(!out_buffer) {

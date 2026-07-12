@@ -592,7 +592,7 @@ static unsigned char *mbed_gen_publickey_from_rsa(LIBSSH2_SESSION *session,
     mbedtls_mpi_write_binary(&rsa->MBEDTLS_PRIVATE(N), p, n_bytes);
     p += n_bytes; /* Increment write index after writing to buffer */
 
-    *keylen = (size_t)(p - key);
+    *keylen = p - key;
     return key;
 }
 
@@ -1274,7 +1274,7 @@ int ssh2_ecdsa_sign(ssh2_ecdsa_ctx *ec_ctx, LIBSSH2_SESSION *session,
     sp = mbed_write_bn(sp, &pr, r_len);
     sp = mbed_write_bn(sp, &ps, s_len);
 
-    *signature_len = (size_t)(sp - tmp_sign);
+    *signature_len = sp - tmp_sign;
 
     *signature = SSH2_CALLOC(session, *signature_len);
     if(!*signature)
