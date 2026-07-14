@@ -307,7 +307,7 @@ int ssh2_bn_set_word(ssh2_bn *bn, uint32_t word)
         return -1;
 
     for(offset = 0; offset < length; offset++)
-        bn->bignum[offset] = (word >> (offset * 8)) & 0xff;
+        bn->bignum[offset] = (word >> ((length - 1 - offset) * 8)) & 0xff;
 
     return 0;
 }
