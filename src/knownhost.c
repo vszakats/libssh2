@@ -389,7 +389,7 @@ static int knownhost_check(LIBSSH2_KNOWNHOSTS *hosts,
                            struct libssh2_knownhost **store)
 {
     struct known_host *node;
-    struct known_host *badkey = NULL;
+    struct known_host *badkey;
     int type = typemask & LIBSSH2_KNOWNHOST_TYPE_MASK;
     char *keyalloc = NULL;
     int rc = LIBSSH2_KNOWNHOST_CHECK_NOTFOUND;
@@ -450,6 +450,7 @@ static int knownhost_check(LIBSSH2_KNOWNHOSTS *hosts,
     }
 
     do {
+        badkey = NULL;
         node = ssh2_list_first(&hosts->head);
         while(node) {
             switch(node->typemask & LIBSSH2_KNOWNHOST_TYPE_MASK) {
