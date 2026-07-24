@@ -677,32 +677,6 @@ ssh2_curve_type ssh2_ecdsa_get_curve_type(ssh2_ecdsa_ctx *ec_ctx)
 }
 
 /*
- * returns 0 for success, key curve type that maps to ssh2_curve_type
- */
-static int ossl_ecdsa_curve_type_from_name(const char *name, size_t name_len,
-                                           ssh2_curve_type *out_curve)
-{
-    ssh2_curve_type type;
-
-    if(!name || name_len != 19)
-        return -1;
-
-    if(SSH2_IS_LITERAL(name, name_len, "ecdsa-sha2-nistp256"))
-        type = SSH2_EC_CURVE_NISTP256;
-    else if(SSH2_IS_LITERAL(name, name_len, "ecdsa-sha2-nistp384"))
-        type = SSH2_EC_CURVE_NISTP384;
-    else if(SSH2_IS_LITERAL(name, name_len, "ecdsa-sha2-nistp521"))
-        type = SSH2_EC_CURVE_NISTP521;
-    else
-        return -1;
-
-    if(out_curve)
-        *out_curve = type;
-
-    return 0;
-}
-
-/*
  * Creates a new public key given an octal string, length and type
  */
 int ssh2_ecdsa_curve_name_with_octal_new(
@@ -3417,7 +3391,7 @@ static int ossl_key_from_openssh(LIBSSH2_SESSION *session,
                                                   pubkeydata, pubkeydata_len,
                                                   NULL, NULL, NULL, NULL,
                                                   (ssh2_ecdsa_ctx **)key_ctx);
-    else if(ossl_ecdsa_curve_type_from_name(buf, buf_len, &type) == 0 &&
+    else if(ssh2_pem_ecdsa_curve_type_from_name(buf, buf_len, &type) == 0 &&
             (!want_method || !strcmp("ssh-ecdsa", want_method)))
         rc = ossl_ecdsa_openssh_priv_to_pubkey(session, type, decrypted,
                                                method,

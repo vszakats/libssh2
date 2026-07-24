@@ -1246,6 +1246,9 @@ int ssh2_pem_decode_sequence(unsigned char **data, size_t *datalen);
 int ssh2_pem_decode_integer(unsigned char **data, size_t *datalen,
                             unsigned char **i, unsigned int *ilen);
 
+int ssh2_pem_ecdsa_curve_type_from_name(const char *name, size_t name_len,
+                                        ssh2_curve_type *out_curve);
+
 /* global.c */
 void ssh2_init_if_needed(void);
 
