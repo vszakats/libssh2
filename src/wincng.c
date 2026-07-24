@@ -2203,6 +2203,7 @@ cleanup:
 }
 
 static int wcng_ecdsa_curve_type_from_name(IN const char *name,
+                                           IN size_t name_len,
                                            OUT ssh2_curve_type *out_curve)
 {
     unsigned int curve;
@@ -2211,11 +2212,14 @@ static int wcng_ecdsa_curve_type_from_name(IN const char *name,
     if(!name || !out_curve)
         return LIBSSH2_ERROR_INVAL;
 
-    for(curve = 0; curve < SSH2_ARRAYSIZE(wcng_ecdsa_algs); curve++)
-        if(!strcmp(name, wcng_ecdsa_algs[curve].name)) {
+    for(curve = 0; curve < SSH2_ARRAYSIZE(wcng_ecdsa_algs); curve++) {
+        size_t want_len = strlen(wcng_ecdsa_algs[curve].name);
+        if(name_len == want_len &&
+           !memcmp(name, wcng_ecdsa_algs[curve].name, want_len)) {
             *out_curve = (ssh2_curve_type)curve;
             return LIBSSH2_ERROR_NONE;
         }
+    }
 
     return LIBSSH2_ERROR_INVAL;
 }
@@ -2324,7 +2328,7 @@ static int wcng_ecdsa_new_private_parse(OUT ssh2_ecdsa_ctx **ec_ctx,
     unsigned char *publickey;
     size_t publickey_len;
 
-    ssh2_curve_type curve_type;
+    ssh2_curve_type curve;
     int result;
     uint32_t check1, check2;
     struct string_buf data_buffer;
@@ -2367,7 +2371,7 @@ static int wcng_ecdsa_new_private_parse(OUT ssh2_ecdsa_ctx **ec_ctx,
     if(result != LIBSSH2_ERROR_NONE)
         goto cleanup;
 
-    result = wcng_ecdsa_curve_type_from_name(keytype, &curve_type);
+    result = wcng_ecdsa_curve_type_from_name(keytype, keytype_len, &curve);
     if(result < 0)
         goto cleanup;
 
